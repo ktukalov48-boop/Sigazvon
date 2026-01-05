@@ -1,103 +1,45 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: system-ui, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 body {
   height: 100vh;
-  overflow: hidden;
-  background: linear-gradient(
-    270deg,
-    #020617,
-    #0a1a2f,
-    #020617
-  );
-  background-size: 600% 600%;
-  animation: gradientFlow 12s ease infinite;
-  color: #e5e7eb;
+  background: linear-gradient(270deg, #0a1a3f, #000);
+  background-size: 400% 400%;
+  animation: gradientFlow 10s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
-/* АНИМАЦИЯ ФОНА */
 @keyframes gradientFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* ЛОГИН */
-#login {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-}
-
-#login input, #login button {
-  padding: 10px;
-  font-size: 16px;
-}
-
-/* ЧАТ */
 .hidden {
   display: none;
 }
 
-#chat {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+#login, #chat {
+  width: 400px;
+  background: rgba(0,0,0,0.6);
+  padding: 20px;
+  border-radius: 12px;
 }
 
 #messages {
-  flex: 1;
   list-style: none;
-  padding: 20px;
+  height: 300px;
   overflow-y: auto;
+  margin-bottom: 10px;
 }
 
 #messages li {
-  background: #1e293b;
-  margin-bottom: 10px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  max-width: 70%;
-}
-
-#form {
-  display: flex;
-  padding: 10px;
-  background: #020617;
-}
-
-#input {
-  flex: 1;
-  padding: 10px;
-}
-
-#callControls {
-  display: flex;
-  gap: 8px;
-  padding: 10px;
-  background: #020617;
-}
-
-/* ЗВОНОК */
-#callModal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: none;
-  z-index: 1000;
-}
-
-#callModal.active {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
+  margin-bottom: 6px;
 }

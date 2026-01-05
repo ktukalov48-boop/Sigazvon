@@ -7,16 +7,24 @@
 </head>
 <body>
 
-<div id="login">
-  <input id="nickname" placeholder="Никнейм">
-  <button id="joinBtn" type="button">Войти</button>
-</div>
+  <!-- ЭКРАН ВХОДА -->
+  <div id="login">
+    <h1>Sigazvon</h1>
+    <input id="nickname" placeholder="Никнейм">
+    <button id="joinBtn">Войти</button>
+  </div>
 
-<div id="chat" class="hidden">
-  <p>Чат открыт</p>
-</div>
+  <!-- ЧАТ -->
+  <div id="chat" class="hidden">
+    <ul id="messages"></ul>
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="client.js"></script>
+    <form id="form">
+      <input id="input" autocomplete="off" placeholder="Сообщение">
+      <button>Отправить</button>
+    </form>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
 </body>
 </html>
