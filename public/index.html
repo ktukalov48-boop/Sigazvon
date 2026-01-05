@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sigazvon</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <div id="login">
     <h1>Sigazvon</h1>
-    <input id="nickname" placeholder="Ваш никнейм">
+    <input id="nickname" placeholder="Ваш никнейм" />
     <button id="join">Войти</button>
   </div>
 
   <div id="chat" hidden>
     <ul id="messages"></ul>
+
     <form id="form">
-        <button type="button" id="call">📞</button>
-        <audio id="remoteAudio" autoplay></audio>
-      <input id="input" autocomplete="off" placeholder="Написать сообщение..." />
+      <input id="input" placeholder="Написать сообщение..." />
+      <button type="button" id="call">📞</button>
       <button>➤</button>
     </form>
+  </div>
+
+  <!-- Модалка звонка -->
+  <div id="callModal" hidden>
+    <p id="callText"></p>
+    <button id="acceptCall">Принять</button>
+    <button id="rejectCall">Отклонить</button>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="client.js"></script>
 </body>
+</html>

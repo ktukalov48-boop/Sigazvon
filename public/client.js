@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const socket = io();
 
-  // ===== ЭЛЕМЕНТЫ =====
   const login = document.getElementById('login');
   const chat = document.getElementById('chat');
   const joinBtn = document.getElementById('join');
@@ -10,31 +9,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('form');
   const input = document.getElementById('input');
   const messages = document.getElementById('messages');
-
   const callBtn = document.getElementById('call');
-  const remoteAudio = document.getElementById('remoteAudio');
 
-  // ===== НИКНЕЙМ =====
+  const callModal = document.getElementById('callModal');
+  const callText = document.getElementById('callText');
+  const acceptCall = document.getElementById('acceptCall');
+  const rejectCall = document.getElementById('rejectCall');
+
   let nickname = localStorage.getItem('nickname');
+  let incomingFrom = null;
 
   if (nickname) {
-    login.style.display = 'none';
-    chat.style.display = 'flex';
+    login.hidden = true;
+    chat.hidden = false;
+    socket.emit('join', nickname);
   }
 
   joinBtn.onclick = () => {
-    const value = nicknameInput.value.trim();
-    if (!value) return;
+    nickname = nicknameInput.value.trim();
+    if (!nickname) return;
 
-    nickname = value;
     localStorage.setItem('nickname', nickname);
+    socket.emit('join', nickname);
 
-    login.style.display = 'none';
-    chat.style.display = 'flex';
-    input.focus();
+    login.hidden = true;
+    chat.hidden = false;
   };
 
-  // ===== СООБЩЕНИЯ =====
   form.addEventListener('submit', e => {
     e.preventDefault();
     if (!input.value) return;
@@ -49,77 +50,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
   socket.on('chat message', msg => {
     const li = document.createElement('li');
-    li.className = msg.nickname === nickname ? 'me' : 'other';
-
+    li.className = msg.nickname === nickname ? 'me' : '';
     li.innerHTML = `
       <span class="nick">${msg.nickname}</span>
       <div class="bubble">${msg.text}</div>
     `;
-
     messages.appendChild(li);
     messages.scrollTop = messages.scrollHeight;
   });
 
-  // ===== WEBRTC ЗВОНКИ =====
-  let localStream;
-  let peerConnection;
+  // 📞 ЗВОНОК
+  callBtn.onclick = () => {
+    const to = prompt('Кому позвонить? (ник)');
+    if (!to) return;
 
-  const servers = {
-    iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+    socket.emit('call-user', { to, from: nickname });
   };
 
-  async function getAudio() {
-    localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  }
+  socket.on('incoming-call', from => {
+    incomingFrom = from;
+    callText.textContent = `Входящий звонок от ${from}`;
+    callModal.hidden = false;
+  });
 
-  function createPeer() {
-    peerConnection = new RTCPeerConnection(servers);
-
-    localStream.getTracks().forEach(track =>
-      peerConnection.addTrack(track, localStream)
-    );
-
-    peerConnection.ontrack = event => {
-      remoteAudio.srcObject = event.streams[0];
-    };
-
-    peerConnection.onicecandidate = event => {
-      if (event.candidate) {
-        socket.emit('ice-candidate', event.candidate);
-      }
-    };
-  }
-
-  // 📞 НАЧАТЬ ЗВОНОК
-  callBtn.onclick = async () => {
-    await getAudio();
-    createPeer();
-
-    const offer = await peerConnection.createOffer();
-    await peerConnection.setLocalDescription(offer);
-
-    socket.emit('call-offer', offer);
+  acceptCall.onclick = () => {
+    socket.emit('accept-call', { to: incomingFrom, from: nickname });
+    callModal.hidden = true;
+    alert('Звонок принят (следующий шаг — WebRTC)');
   };
 
-  // 📥 ПРИНЯТЬ ЗВОНОК
-  socket.on('call-offer', async offer => {
-    await getAudio();
-    createPeer();
+  rejectCall.onclick = () => {
+    callModal.hidden = true;
+    incomingFrom = null;
+  };
 
-    await peerConnection.setRemoteDescription(offer);
-    const answer = await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer);
-
-    socket.emit('call-answer', answer);
-  });
-
-  socket.on('call-answer', async answer => {
-    await peerConnection.setRemoteDescription(answer);
-  });
-
-  socket.on('ice-candidate', async candidate => {
-    if (peerConnection) {
-      await peerConnection.addIceCandidate(candidate);
-    }
+  socket.on('call-accepted', from => {
+    alert(`${from} принял звонок`);
   });
 });
