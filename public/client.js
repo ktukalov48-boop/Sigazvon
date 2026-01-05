@@ -1,3 +1,4 @@
+alert('client.js подключен');
 console.log('client.js подключён');
 
 const socket = io();

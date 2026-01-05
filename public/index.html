@@ -8,29 +8,12 @@
 <body>
 
 <div id="login">
-  <h1>Sigazvon</h1>
-  <input id="nicknameInput" placeholder="Ваш ник">
+  <input id="nickname" placeholder="Никнейм">
   <button id="joinBtn" type="button">Войти</button>
 </div>
 
 <div id="chat" class="hidden">
-  <ul id="messages"></ul>
-
-  <form id="form">
-    <input id="input" autocomplete="off" placeholder="Сообщение">
-    <button>Отправить</button>
-  </form>
-
-  <div id="callControls">
-    <input id="callTo" placeholder="Ник для звонка">
-    <button id="callBtn">📞</button>
-  </div>
-</div>
-
-<div id="callModal">
-  <p id="callText"></p>
-  <button id="acceptCall">Принять</button>
-  <button id="rejectCall">Отклонить</button>
+  <p>Чат открыт</p>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
