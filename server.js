@@ -12,7 +12,6 @@ io.on('connection', socket => {
 
   socket.on('join', nickname => {
     users[nickname] = socket.id;
-    console.log(`Пользователь ${nickname} вошёл`);
   });
 
   socket.on('chat message', data => {
@@ -20,16 +19,14 @@ io.on('connection', socket => {
   });
 
   socket.on('call-user', ({ to, from }) => {
-    const target = users[to];
-    if (target) {
-      io.to(target).emit('incoming-call', from);
+    if (users[to]) {
+      io.to(users[to]).emit('incoming-call', from);
     }
   });
 
   socket.on('accept-call', ({ to, from }) => {
-    const target = users[to];
-    if (target) {
-      io.to(target).emit('call-accepted', from);
+    if (users[to]) {
+      io.to(users[to]).emit('call-accepted', from);
     }
   });
 
@@ -39,7 +36,6 @@ io.on('connection', socket => {
         delete users[name];
       }
     }
-    console.log('Пользователь отключился');
   });
 });
 

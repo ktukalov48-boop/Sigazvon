@@ -6,11 +6,24 @@
 }
 
 body {
-  margin: 0;
   height: 100vh;
-  overflow: hidden; /* ВАЖНО */
-  background: linear-gradient(135deg, #0a1a2f, #000);
+  overflow: hidden;
+  background: linear-gradient(
+    270deg,
+    #020617,
+    #0a1a2f,
+    #020617
+  );
+  background-size: 600% 600%;
+  animation: gradientFlow 12s ease infinite;
   color: #e5e7eb;
+}
+
+/* АНИМАЦИЯ ФОНА */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* ЛОГИН */
@@ -66,10 +79,10 @@ body {
 }
 
 #callControls {
-  padding: 10px;
-  background: #020617;
   display: flex;
   gap: 8px;
+  padding: 10px;
+  background: #020617;
 }
 
 /* ЗВОНОК */
@@ -87,9 +100,4 @@ body {
   justify-content: center;
   align-items: center;
   gap: 12px;
-}
-@keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }

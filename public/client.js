@@ -1,8 +1,10 @@
+console.log('client.js подключён');
+
 const socket = io();
 
-// Элементы
 const login = document.getElementById('login');
 const chat = document.getElementById('chat');
+
 const joinBtn = document.getElementById('joinBtn');
 const nicknameInput = document.getElementById('nicknameInput');
 
@@ -21,7 +23,7 @@ const rejectCall = document.getElementById('rejectCall');
 let nickname = '';
 let incomingFrom = null;
 
-// Вход
+/* ВХОД */
 joinBtn.onclick = () => {
   nickname = nicknameInput.value.trim();
   if (!nickname) return;
@@ -31,7 +33,7 @@ joinBtn.onclick = () => {
   chat.classList.remove('hidden');
 };
 
-// Сообщения
+/* ЧАТ */
 form.addEventListener('submit', e => {
   e.preventDefault();
   if (!input.value) return;
@@ -51,27 +53,24 @@ socket.on('chat message', data => {
   messages.scrollTop = messages.scrollHeight;
 });
 
-// Звонок
+/* ЗВОНОК */
 callBtn.onclick = () => {
   if (!callTo.value) return;
   socket.emit('call-user', { to: callTo.value, from: nickname });
 };
 
-// Входящий звонок
 socket.on('incoming-call', from => {
   incomingFrom = from;
   callText.textContent = `Входящий звонок от ${from}`;
   callModal.classList.add('active');
 });
 
-// Принять
 acceptCall.onclick = () => {
   socket.emit('accept-call', { to: incomingFrom, from: nickname });
   callModal.classList.remove('active');
   alert(`Вы приняли звонок от ${incomingFrom}`);
 };
 
-// Отклонить
 rejectCall.onclick = () => {
   callModal.classList.remove('active');
   incomingFrom = null;
