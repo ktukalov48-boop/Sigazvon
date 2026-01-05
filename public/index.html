@@ -1,28 +1,55 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"/>
   <title>Sigazvon</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <!-- ЭКРАН ВХОДА -->
-  <div id="login">
-    <h1>Sigazvon</h1>
-    <input id="nickname" placeholder="Никнейм">
-    <button id="joinBtn">Войти</button>
-  </div>
+  <div id="login" class="login-container">
+  <h1 class="logo">Sigazvon</h1>
+
+  <input
+    id="nickname"
+    class="login-input"
+    placeholder="Введите никнейм"
+    autocomplete="off"
+  />
+
+  <button id="joinBtn" class="login-button">
+    Войти
+  </button>
+</div>
+
 
   <!-- ЧАТ -->
-  <div id="chat" class="hidden">
-    <ul id="messages"></ul>
+<div id="chat" class="chat-layout hidden">
 
-    <form id="form">
-      <input id="input" autocomplete="off" placeholder="Сообщение">
-      <button>Отправить</button>
-    </form>
-  </div>
+  <aside class="friends">
+    <h3>Друзья</h3>
+
+    <div class="add-friend">
+      <input placeholder="Никнейм">
+      <button>+</button>
+    </div>
+  </aside>
+
+  <main class="messages-area">
+    <ul id="messages"></ul>
+  </main>
+
+  <form id="form" class="chat-input">
+    <input id="input" placeholder="Сообщение">
+    <button id="sendBtn">Отправить</button>
+  </form>
+
+</div>
+
+
+
+
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="client.js"></script>
