@@ -6,54 +6,95 @@
 }
 
 html, body {
-  width: 100%;
   height: 100%;
-  background: #0f172a;
-  color: #e5e7eb;
+  background: #313338;
+  color: #dcddde;
+}
+
+#login {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+#login input {
+  padding: 12px;
+  width: 220px;
+  border-radius: 6px;
+  border: none;
+}
+
+#login button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  background: #5865f2;
+  color: white;
+  cursor: pointer;
 }
 
 #chat {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
 }
 
 #messages {
   flex: 1;
-  list-style: none;
-  padding: 20px;
+  padding: 16px;
   overflow-y: auto;
+  list-style: none;
 }
 
 #messages li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  max-width: 60%;
+}
+
+#messages li.me {
+  align-self: flex-end;
+}
+
+.nick {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+.bubble {
   padding: 10px 14px;
-  max-width: 70%;
-  border-radius: 12px;
-  background: #1e293b;
-  word-wrap: break-word;
+  border-radius: 8px;
+  background: #404249;
+}
+
+.me .bubble {
+  background: #5865f2;
+  color: white;
 }
 
 #form {
   display: flex;
   padding: 12px;
-  background: #020617;
-  border-top: 1px solid #1e293b;
+  background: #383a40;
 }
 
 #input {
   flex: 1;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 6px;
   border: none;
-  outline: none;
 }
 
 button {
   margin-left: 10px;
-  padding: 10px 16px;
-  border-radius: 8px;
+  padding: 0 16px;
+  border-radius: 6px;
   border: none;
-  cursor: pointer;
+  background: #5865f2;
+  color: white;
 }
