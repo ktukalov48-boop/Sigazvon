@@ -21,7 +21,8 @@ console.log('Пользователь отключился');
 });
 });
 
+const PORT = process.env.PORT || 3000;
 
-http.listen(3000, () => {
-console.log('Sigazvon запущен: http://localhost:3000');
+http.listen(PORT, () => {
+  console.log(`Sigazvon запущен на порту ${PORT}`);
 });
