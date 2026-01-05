@@ -70,6 +70,10 @@ html, body {
   padding: 10px 14px;
   border-radius: 8px;
   background: #404249;
+
+  max-width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .me .bubble {

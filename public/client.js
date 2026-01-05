@@ -17,12 +17,16 @@ if (nickname) {
 }
 
 joinBtn.onclick = () => {
-  nickname = nicknameInput.value.trim();
-  if (!nickname) return;
+  const value = nicknameInput.value.trim();
+  if (!value) return;
 
+  nickname = value;
   localStorage.setItem('nickname', nickname);
-  login.hidden = true;
-  chat.hidden = false;
+
+  login.style.display = 'none';
+  chat.style.display = 'flex';
+
+  input.focus();
 };
 
 form.addEventListener('submit', e => {
