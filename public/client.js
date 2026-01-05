@@ -1,90 +1,78 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const socket = io();
+const socket = io();
 
-  const login = document.getElementById('login');
-  const chat = document.getElementById('chat');
-  const joinBtn = document.getElementById('join');
-  const nicknameInput = document.getElementById('nickname');
+// Элементы
+const login = document.getElementById('login');
+const chat = document.getElementById('chat');
+const joinBtn = document.getElementById('joinBtn');
+const nicknameInput = document.getElementById('nicknameInput');
 
-  const form = document.getElementById('form');
-  const input = document.getElementById('input');
-  const messages = document.getElementById('messages');
-  const callBtn = document.getElementById('call');
+const form = document.getElementById('form');
+const input = document.getElementById('input');
+const messages = document.getElementById('messages');
 
-  const callModal = document.getElementById('callModal');
-  const callText = document.getElementById('callText');
-  const acceptCall = document.getElementById('acceptCall');
-  const rejectCall = document.getElementById('rejectCall');
+const callTo = document.getElementById('callTo');
+const callBtn = document.getElementById('callBtn');
 
-  let nickname = localStorage.getItem('nickname');
-  let incomingFrom = null;
+const callModal = document.getElementById('callModal');
+const callText = document.getElementById('callText');
+const acceptCall = document.getElementById('acceptCall');
+const rejectCall = document.getElementById('rejectCall');
 
-  if (nickname) {
-    login.hidden = true;
-    chat.hidden = false;
-    socket.emit('join', nickname);
-  }
+let nickname = '';
+let incomingFrom = null;
 
-  joinBtn.onclick = () => {
-    nickname = nicknameInput.value.trim();
-    if (!nickname) return;
+// Вход
+joinBtn.onclick = () => {
+  nickname = nicknameInput.value.trim();
+  if (!nickname) return;
 
-    localStorage.setItem('nickname', nickname);
-    socket.emit('join', nickname);
+  socket.emit('join', nickname);
+  login.classList.add('hidden');
+  chat.classList.remove('hidden');
+};
 
-    login.hidden = true;
-    chat.hidden = false;
-  };
+// Сообщения
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  if (!input.value) return;
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    if (!input.value) return;
-
-    socket.emit('chat message', {
-      text: input.value,
-      nickname
-    });
-
-    input.value = '';
+  socket.emit('chat message', {
+    user: nickname,
+    text: input.value
   });
 
-  socket.on('chat message', msg => {
-    const li = document.createElement('li');
-    li.className = msg.nickname === nickname ? 'me' : '';
-    li.innerHTML = `
-      <span class="nick">${msg.nickname}</span>
-      <div class="bubble">${msg.text}</div>
-    `;
-    messages.appendChild(li);
-    messages.scrollTop = messages.scrollHeight;
-  });
-
-  // 📞 ЗВОНОК
-  callBtn.onclick = () => {
-    const to = prompt('Кому позвонить? (ник)');
-    if (!to) return;
-
-    socket.emit('call-user', { to, from: nickname });
-  };
-
-  socket.on('incoming-call', from => {
-    incomingFrom = from;
-    callText.textContent = `Входящий звонок от ${from}`;
-    callModal.hidden = false;
-  });
-
-  acceptCall.onclick = () => {
-    socket.emit('accept-call', { to: incomingFrom, from: nickname });
-    callModal.hidden = true;
-    alert('Звонок принят (следующий шаг — WebRTC)');
-  };
-
-  rejectCall.onclick = () => {
-    callModal.hidden = true;
-    incomingFrom = null;
-  };
-
-  socket.on('call-accepted', from => {
-    alert(`${from} принял звонок`);
-  });
+  input.value = '';
 });
+
+socket.on('chat message', data => {
+  const li = document.createElement('li');
+  li.textContent = `${data.user}: ${data.text}`;
+  messages.appendChild(li);
+  messages.scrollTop = messages.scrollHeight;
+});
+
+// Звонок
+callBtn.onclick = () => {
+  if (!callTo.value) return;
+  socket.emit('call-user', { to: callTo.value, from: nickname });
+};
+
+// Входящий звонок
+socket.on('incoming-call', from => {
+  incomingFrom = from;
+  callText.textContent = `Входящий звонок от ${from}`;
+  callModal.classList.add('active');
+});
+
+// Принять
+acceptCall.onclick = () => {
+  socket.emit('accept-call', { to: incomingFrom, from: nickname });
+  callModal.classList.remove('active');
+  alert(`Вы приняли звонок от ${incomingFrom}`);
+};
+
+// Отклонить
+rejectCall.onclick = () => {
+  callModal.classList.remove('active');
+  incomingFrom = null;
+};

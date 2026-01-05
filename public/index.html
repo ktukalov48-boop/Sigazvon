@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Sigazvon</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div id="login">
-    <h1>Sigazvon</h1>
-    <input id="nickname" placeholder="Ваш никнейм" />
-    <button id="join">Войти</button>
+<div id="login">
+  <h2>Sigazvon</h2>
+  <input id="nicknameInput" placeholder="Ваш ник">
+  <button id="joinBtn">Войти</button>
+</div>
+
+<div id="chat" class="hidden">
+  <ul id="messages"></ul>
+
+  <form id="form">
+    <input id="input" autocomplete="off" placeholder="Написать сообщение">
+    <button>Отправить</button>
+  </form>
+
+  <div id="callControls">
+    <input id="callTo" placeholder="Кому звонить (ник)">
+    <button id="callBtn">📞 Позвонить</button>
   </div>
+</div>
 
-  <div id="chat" hidden>
-    <ul id="messages"></ul>
+<!-- Модалка звонка -->
+<div id="callModal">
+  <p id="callText"></p>
+  <button id="acceptCall">Принять</button>
+  <button id="rejectCall">Отклонить</button>
+</div>
 
-    <form id="form">
-      <input id="input" placeholder="Написать сообщение..." />
-      <button type="button" id="call">📞</button>
-      <button>➤</button>
-    </form>
-  </div>
-
-  <!-- Модалка звонка -->
-  <div id="callModal" hidden>
-    <p id="callText"></p>
-    <button id="acceptCall">Принять</button>
-    <button id="rejectCall">Отклонить</button>
-  </div>
-
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="client.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
 </body>
 </html>

@@ -5,20 +5,13 @@
   font-family: system-ui, sans-serif;
 }
 
-html, body {
-  height: 100%;
-  background: linear-gradient(120deg, #020617, #0b1c3d, #020617);
-  background-size: 400% 400%;
-  animation: bg 12s ease infinite;
-  color: #dcddde;
+body {
+  background: linear-gradient(135deg, #0a1a2f, #000);
+  color: #e5e7eb;
+  height: 100vh;
 }
 
-@keyframes bg {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
+/* ЛОГИН */
 #login {
   height: 100vh;
   display: flex;
@@ -28,19 +21,14 @@ html, body {
   gap: 12px;
 }
 
-#login input {
-  padding: 12px;
-  border-radius: 6px;
-  border: none;
+#login input, #login button {
+  padding: 10px;
+  font-size: 16px;
 }
 
-#login button {
-  padding: 10px 20px;
-  background: #5865f2;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+/* ЧАТ */
+.hidden {
+  display: none;
 }
 
 #chat {
@@ -52,63 +40,46 @@ html, body {
 #messages {
   flex: 1;
   list-style: none;
-  padding: 16px;
+  padding: 20px;
   overflow-y: auto;
 }
 
 #messages li {
+  background: #1e293b;
   margin-bottom: 10px;
-  max-width: 60%;
-}
-
-.me {
-  align-self: flex-end;
-}
-
-.nick {
-  font-size: 12px;
-  opacity: 0.7;
-}
-
-.bubble {
-  background: #404249;
   padding: 10px 14px;
-  border-radius: 8px;
-  word-break: break-word;
-}
-
-.me .bubble {
-  background: #5865f2;
+  border-radius: 12px;
+  max-width: 70%;
 }
 
 #form {
   display: flex;
-  padding: 12px;
-  background: #383a40;
+  padding: 10px;
+  background: #020617;
 }
 
 #input {
   flex: 1;
   padding: 10px;
-  border-radius: 6px;
-  border: none;
 }
 
-button {
-  margin-left: 8px;
-  padding: 0 16px;
-  border-radius: 6px;
-  border: none;
-  background: #5865f2;
-  color: white;
-  cursor: pointer;
+#callControls {
+  padding: 10px;
+  background: #020617;
+  display: flex;
+  gap: 8px;
 }
 
-/* Звонок */
+/* ЗВОНОК */
 #callModal {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.7);
+  display: none;
+  z-index: 1000;
+}
+
+#callModal.active {
   display: flex;
   flex-direction: column;
   justify-content: center;

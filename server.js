@@ -3,20 +3,20 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-app.use(express.static('public'));
+const users = {};
 
-const users = {}; // nickname -> socket.id
+app.use(express.static('public'));
 
 io.on('connection', socket => {
   console.log('Пользователь подключился');
 
   socket.on('join', nickname => {
     users[nickname] = socket.id;
-    socket.nickname = nickname;
+    console.log(`Пользователь ${nickname} вошёл`);
   });
 
-  socket.on('chat message', msg => {
-    io.emit('chat message', msg);
+  socket.on('chat message', data => {
+    io.emit('chat message', data);
   });
 
   socket.on('call-user', ({ to, from }) => {
@@ -34,8 +34,10 @@ io.on('connection', socket => {
   });
 
   socket.on('disconnect', () => {
-    if (socket.nickname) {
-      delete users[socket.nickname];
+    for (const name in users) {
+      if (users[name] === socket.id) {
+        delete users[name];
+      }
     }
     console.log('Пользователь отключился');
   });
