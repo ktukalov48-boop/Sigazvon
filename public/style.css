@@ -6,9 +6,11 @@
 }
 
 body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden; /* ВАЖНО */
   background: linear-gradient(135deg, #0a1a2f, #000);
   color: #e5e7eb;
-  height: 100vh;
 }
 
 /* ЛОГИН */
@@ -85,4 +87,9 @@ body {
   justify-content: center;
   align-items: center;
   gap: 12px;
+}
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
