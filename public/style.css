@@ -1,3 +1,22 @@
+html, body {
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    #020617,
+    #0b1c3d,
+    #020617
+  );
+  background-size: 400% 400%;
+  animation: gradientMove 12s ease infinite;
+  color: #dcddde;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 * {
   margin: 0;
   padding: 0;
