@@ -1,55 +1,42 @@
 document.addEventListener('DOMContentLoaded', () => {
   const socket = io();
 
-  // ===== ЭЛЕМЕНТЫ ВХОДА =====
-  const loginBtn = document.getElementById('loginBtn');
+  // элементы
   const login = document.getElementById('login');
   const chat = document.getElementById('chat');
+  const loginBtn = document.getElementById('loginBtn');
   const nicknameInput = document.getElementById('nickname');
 
-  if (!loginBtn || !login || !chat || !nicknameInput) {
-    console.error('❌ Ошибка: элементы входа не найдены');
-    return;
-  }
+  const form = document.getElementById('form');
+  const input = document.getElementById('input');
+  const messages = document.getElementById('messages');
 
   let nickname = '';
 
+  // вход
   loginBtn.addEventListener('click', () => {
-    if (!nicknameInput.value.trim()) return;
-
     nickname = nicknameInput.value.trim();
+    if (!nickname) return;
+
+    socket.emit('join', nickname);
 
     login.classList.add('hidden');
     chat.classList.remove('hidden');
   });
 
-  // ===== ЭЛЕМЕНТЫ ЧАТА =====
-  const form = document.getElementById('form');
-  const input = document.getElementById('input');
-  const messages = document.getElementById('messages');
-
-  if (!form || !input || !messages) {
-    console.error('❌ Ошибка: элементы чата не найдены');
-    return;
-  }
-
   // отправка сообщения
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (!input.value) return;
+    if (!input.value.trim()) return;
 
-    socket.emit('chat message', {
-      user: nickname,
-      text: input.value
-    });
-
+    socket.emit('message', input.value.trim());
     input.value = '';
   });
 
   // получение сообщений
-  socket.on('chat message', (msg) => {
+  socket.on('message', (msg) => {
     const li = document.createElement('li');
-    li.innerHTML = `<strong>${msg.user}:</strong> ${msg.text}`;
+    li.textContent = `${msg.user}: ${msg.text}`;
     messages.appendChild(li);
     messages.scrollTop = messages.scrollHeight;
   });
