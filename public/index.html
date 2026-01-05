@@ -3,49 +3,42 @@
 <head>
   <meta charset="UTF-8"/>
   <title>Sigazvon</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
   <!-- ЭКРАН ВХОДА -->
   <div id="login" class="login-container">
   <h1 class="logo">Sigazvon</h1>
-
   <input
     id="nickname"
     class="login-input"
     placeholder="Введите никнейм"
     autocomplete="off"
   />
-
-  <button id="joinBtn" class="login-button">
+  <button id="loginBtn" class="login-button">
     Войти
   </button>
 </div>
 
 
   <!-- ЧАТ -->
+<!-- ЧАТ -->
 <div id="chat" class="chat-layout hidden">
 
-  <aside class="friends">
-    <h3>Друзья</h3>
-
-    <div class="add-friend">
-      <input placeholder="Никнейм">
-      <button>+</button>
-    </div>
-  </aside>
-
+  <!-- ЛЕВАЯ ЧАСТЬ: сообщения -->
   <main class="messages-area">
     <ul id="messages"></ul>
   </main>
 
+  <!-- НИЗ: ввод сообщения -->
   <form id="form" class="chat-input">
     <input id="input" placeholder="Сообщение">
     <button id="sendBtn">Отправить</button>
   </form>
 
 </div>
+
 
 
 

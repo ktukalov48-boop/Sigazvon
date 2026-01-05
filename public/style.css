@@ -221,80 +221,6 @@ button {
   background-size: 400% 400%;
   animation: gradientFlow 12s ease infinite;
 }
-/* СПИСОК ДРУЗЕЙ */
-#friendsList {
-  flex: 1;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  overflow-y: auto;
-}
-
-.friend {
-  padding: 10px;
-  border-radius: 10px;
-  background: #1e293b;
-  color: white;
-  margin-bottom: 8px;
-  cursor: pointer;
-}
-
-.friend:hover {
-  background: #334155;
-}
-
-#friendInput {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-}
-
-#addFriendBtn {
-  width: 40px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  background: #5865f2;
-  color: white;
-  font-size: 20px;
-}
-#form button:hover {
-  background: rgba(88, 101, 242, 0.5);
-  transform: translateY(-1px);
-}
-
-#form button:active {
-  transform: scale(0.97);
-}
-#form button:hover {
-  background: rgba(88, 101, 242, 0.5);
-  transform: translateY(-1px);
-}
-
-#form button:active {
-  transform: scale(0.97);
-}
-.chat-input {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  right: 280px; /* место под друзей */
-
-  display: flex;
-  align-items: center;
-  gap: 14px;
-
-  padding: 14px 18px;
-
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-
-  border-radius: 26px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-}
 
 /* БОЛЬШОЕ поле */
 #input {
@@ -327,7 +253,6 @@ button {
   inset: 0;
 
   display: grid;
-  grid-template-columns: 260px 1fr;
   grid-template-rows: 1fr auto;
 
   background: radial-gradient(
@@ -336,13 +261,37 @@ button {
     #03060f 70%
   );
 }
-.friends {
-  grid-row: 1 / span 2;
 
+/* ЧАТ */
+#chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(24px);
+}
 
-  border-right: 1px solid rgba(255,255,255,0.1);
-  color: white;
+/* СООБЩЕНИЯ */
+#messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+/* ФОРМА ОТПРАВКИ */
+#form {
+  display: flex;
+  gap: 12px;
+}
+
+/* Левая часть — чат */
+.messages-area {
+  grid-column: 1;
+  grid-row: 1;
+  overflow-y: auto;
+}
+
+/* Нижняя панель ввода */
+.chat-input {
+  grid-column: 1;
+  grid-row: 2;
 }
