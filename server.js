@@ -6,33 +6,38 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+const users = new Set();
+
 app.use(express.static('public'));
 
-io.on('connection', (socket) => {
-  console.log('Подключился:', socket.id);
-
-  socket.on('join', (nickname) => {
-    if (typeof nickname !== 'string' || !nickname.trim()) return;
-    socket.nickname = nickname.trim();
-    console.log(`Вошёл: ${socket.nickname}`);
+io.on('connection', socket => {
+  socket.on('join', nickname => {
+    socket.nickname = nickname;
+    users.add(nickname);
   });
 
-  socket.on('message', (text) => {
+  socket.on('message', text => {
     if (!socket.nickname) return;
-    if (typeof text !== 'string' || !text.trim()) return;
 
     io.emit('message', {
       user: socket.nickname,
-      text: text.trim()
+      text
     });
   });
 
+  socket.on('search users', query => {
+    if (!query) return;
+    const result = [...users].filter(u =>
+      u.toLowerCase().includes(query.toLowerCase())
+    );
+    socket.emit('search results', result);
+  });
+
   socket.on('disconnect', () => {
-    console.log('Отключился:', socket.nickname || socket.id);
+    users.delete(socket.nickname);
   });
 });
 
-const PORT = 3000;
-server.listen(PORT, () => {
-  console.log(`Sigazvon запущен: http://localhost:${PORT}`);
+server.listen(3000, () => {
+  console.log('Sigazvon запущен: http://localhost:3000');
 });

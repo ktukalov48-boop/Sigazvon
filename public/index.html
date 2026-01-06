@@ -1,55 +1,77 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Sigazvon</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <!-- ЭКРАН ВХОДА -->
 <div id="login" class="login-container">
   <h1 class="logo">Sigazvon</h1>
-
   <input
     id="nickname"
     placeholder="Введите никнейм"
     autocomplete="off"
   />
-
   <button id="loginBtn">Войти</button>
 </div>
 
-<!-- ЧАТ -->
-<div id="chat" class="chat-layout hidden">
+<!-- ПРИЛОЖЕНИЕ -->
+<div id="chat" class="app hidden">
 
-  <!-- HEADER -->
-  <header class="chat-header">
-    <div class="chat-user">
-      <div class="avatar">S</div>
-      <span class="username" id="currentUser">sosison</span>
+  <!-- ЛЕВАЯ ПАНЕЛЬ -->
+  <aside class="sidebar">
+    <button id="openSearch" class="search-btn">
+      ИСКАТЬ КОНТАКТЫ
+    </button>
+
+    <ul id="chatList" class="chat-list"></ul>
+  </aside>
+
+  <!-- ПРАВАЯ ЧАСТЬ -->
+  <section class="main">
+
+    <!-- ЧАТ -->
+    <div id="chatScreen" class="screen active">
+
+      <header class="chat-header">
+        <div class="contact">
+          <div class="avatar">S</div>
+          <span class="name">sosison</span>
+        </div>
+        <div class="header-btn"></div>
+      </header>
+
+      <ul id="messages" class="messages"></ul>
+
+      <form id="form" class="chat-input">
+        <input id="input" placeholder="Сообщение" autocomplete="off" />
+        <button>Отправить</button>
+      </form>
+
     </div>
-    <button class="chat-exit"></button>
-  </header>
 
-  <!-- MESSAGES -->
-  <main class="messages-area">
-    <ul id="messages"></ul>
-  </main>
+    <!-- ПОИСК -->
+    <div id="searchScreen" class="screen">
 
-  <!-- INPUT -->
-  <form id="form" class="chat-input">
-    <input
-      id="input"
-      type="text"
-      placeholder="Сообщение"
-      autocomplete="off"
-    />
-    <button id="sendBtn" type="submit">Отправить</button>
-  </form>
+      <header class="chat-header">
+        <span class="name">Поиск контактов</span>
+      </header>
 
+      <input
+        id="searchInput"
+        class="search-input"
+        placeholder="Никнейм пользователя"
+      />
+
+      <ul id="searchResults" class="search-results"></ul>
+
+    </div>
+
+  </section>
 </div>
-
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="client.js"></script>
