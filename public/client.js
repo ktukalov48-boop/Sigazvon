@@ -35,23 +35,19 @@ document.addEventListener('DOMContentLoaded', () => {
 // получение сообщений
 socket.on('message', (msg) => {
   const li = document.createElement('li');
+  li.classList.add('message');
 
   const avatar = document.createElement('div');
-  avatar.classList.add('avatar');
+  avatar.className = 'avatar';
   avatar.textContent = msg.user[0].toUpperCase();
 
   const content = document.createElement('div');
-  content.classList.add('content');
+  content.className = 'message-content';
 
-  const user = document.createElement('span');
-  user.classList.add('user');
-  user.textContent = msg.user;
-
-  const text = document.createElement('span');
+  const text = document.createElement('div');
   text.classList.add('text');
   text.textContent = msg.text;
 
-  content.appendChild(user);
   content.appendChild(text);
 
   li.appendChild(avatar);
@@ -60,5 +56,6 @@ socket.on('message', (msg) => {
   messages.appendChild(li);
   messages.scrollTop = messages.scrollHeight;
 });
+
 
 });

@@ -1,51 +1,57 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8">
   <title>Sigazvon</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ЭКРАН ВХОДА -->
-  <div id="login" class="login-container">
+<!-- ЭКРАН ВХОДА -->
+<div id="login" class="login-container">
   <h1 class="logo">Sigazvon</h1>
 
   <input
     id="nickname"
-    class="login-input"
     placeholder="Введите никнейм"
     autocomplete="off"
   />
-  <button id="loginBtn" class="login-button">
-    Войти
-  </button>
+
+  <button id="loginBtn">Войти</button>
 </div>
 
-
-  <!-- ЧАТ -->
 <!-- ЧАТ -->
 <div id="chat" class="chat-layout hidden">
 
-  <!-- ЛЕВАЯ ЧАСТЬ: сообщения -->
+  <!-- HEADER -->
+  <header class="chat-header">
+    <div class="chat-user">
+      <div class="avatar">S</div>
+      <span class="username" id="currentUser">sosison</span>
+    </div>
+    <button class="chat-exit"></button>
+  </header>
+
+  <!-- MESSAGES -->
   <main class="messages-area">
     <ul id="messages"></ul>
   </main>
 
-  <!-- НИЗ: ввод сообщения -->
+  <!-- INPUT -->
   <form id="form" class="chat-input">
-    <input id="input" placeholder="Сообщение">
-    <button id="sendBtn">Отправить</button>
+    <input
+      id="input"
+      type="text"
+      placeholder="Сообщение"
+      autocomplete="off"
+    />
+    <button id="sendBtn" type="submit">Отправить</button>
   </form>
 
-<ul id="messages"></ul>
+</div>
 
 
-
-
-
-
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="client.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
 </body>
 </html>
